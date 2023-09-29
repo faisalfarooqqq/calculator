@@ -1,0 +1,40 @@
+.mainContainer{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    height: 400px;
+    width: 400px;
+    
+}
+
+.mainItem{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    
+}
+
+.buttonContainer{
+    display: flex;
+    flex: 1;
+
+}
+.buttonItem{
+    flex: 1;
+    background-color: yellow;
+}
+
+.displayContainer{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    height: 80px;
+    align-items: flex-end;
+    
+}
+
+.displayItem{
+    padding: 4px;
+    flex: 1;
+   
+}
