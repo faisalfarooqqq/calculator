@@ -1,17 +1,22 @@
 
 document.addEventListener("DOMContentLoaded", ()=> {
+
+    const digitButtons = document.querySelectorAll('.digit');
+    const operatorButtons = document.querySelectorAll('.op');
+    const activeDisplay = document.querySelector('.activeDisplay');
+    
+    const equal = document.querySelector('.equal');
+    const deleteButton = document.querySelector('.delete');
+    const clearButton = document.querySelector('.buttonItem.clear');
+
     let firstNum = 0;
     let secondNum = 0;
-    let operator = "";
-    let inputString = "";
-  
+    let operator = ""; 
     let aDisplay = "";
-    
     let result = 0;
     
     const sum = (firstNum,secondNum) => {
-       
-        return firstNum + secondNum;
+      return firstNum + secondNum;
     
     };
     
@@ -54,73 +59,102 @@ document.addEventListener("DOMContentLoaded", ()=> {
         };
     };
 
-    const digitButtons = document.querySelectorAll('.digit');
-    const operatorButtons = document.querySelectorAll('.op');
-    const activeDisplay = document.querySelector('.activeDisplay');
-    const resultDisplay = document.querySelector('.resultDisplay');
-    const equal = document.querySelector('.equal');
-    const deleteButton = document.querySelector('.delete');
-    const clearButton = document.querySelector('.buttonItem.clear');
 
+    const updateDisplays = () => {
+        activeDisplay.textContent = aDisplay;
+        
+    };
 
+    const handleDigitClick = (e) => {
+        const buttonText = e.target.textContent;
+    
+        if (buttonText === "." && aDisplay.includes(".")) {
+           
+            return; 
+        }
+    
+        aDisplay += buttonText;
+        updateDisplays();
+    };
 
-    digitButtons.forEach(digit =>{
-        digit.addEventListener('click', (e)=> {
-            
-            aDisplay += e.target.textContent;
-            activeDisplay.textContent = aDisplay;
-            
-
-        });
-
-    });
-
-
-    operatorButtons.forEach(op => {
-        op.addEventListener('click', (e) => {
-            if (operator === "") {
+    const handleOperatorClick = (e) => {
+        if (aDisplay !== "") {
+            if (firstNum === 0) {
+                
                 firstNum = parseFloat(aDisplay);
                 operator = e.target.textContent;
-                inputString = aDisplay + operator;
-                resultDisplay.textContent = inputString;
-                aDisplay = "";
-                activeDisplay.textContent = "";
+            } else {
+               
+                secondNum = parseFloat(aDisplay);
+                if (operator !== "") {
+                    
+                    firstNum = operate(firstNum, operator, secondNum);
+                    activeDisplay.textContent = firstNum + e.target.textContent;
+                }
+                operator = e.target.textContent;
             }
-        });
-    });
-
-    equal.addEventListener('click', () => {
-        if (operator !== "") {
-            const secondNum = parseFloat(aDisplay);
-            result = operate(firstNum, operator, secondNum);
-            resultDisplay.textContent = result;
-            firstNum = result;
             aDisplay = "";
-            inputString = "";
-            operator = "";
-            activeDisplay.textContent = "";
         }
-    });
+    };
 
-    deleteButton.addEventListener('click', () => {
+    const handleEqualClick = () => {
+        if (operator !== "") {
+            if (aDisplay !== "") {
+                secondNum = parseFloat(aDisplay);
+                result = operate(firstNum, operator, secondNum);
+                firstNum = result;
+                aDisplay = result;
+                operator = "";
+                
+                updateDisplays();
+            } else if (operator !== "" && secondNum !== 0) {
+                
+                result = operate(firstNum, operator, secondNum);
+                result = firstNum;
+                aDisplay = result;
+                
+                operator = "";
+                updateDisplays();
+            }
+        }
+    };
+
+    const deleteLastInput = () => {
         if (aDisplay.length > 0) {
-            
+           
             aDisplay = aDisplay.slice(0, -1);
-            activeDisplay.textContent = aDisplay;
+            
+        } else if (operator !== "") {
+            
+            operator = "";
+            
         }
+        updateDisplays();
+    };
+
+    const clearAll = () => {
+        firstNum = 0;
+        operator = "";
+        rDisplay = "";
+        aDisplay = "";
+        result = 0;
+        updateDisplays();
+    };
+
+    digitButtons.forEach(digit => {
+        digit.addEventListener('click', handleDigitClick);
     });
 
-    clearButton.addEventListener('click', () => {
-        aDisplay = ""; 
-        activeDisplay.textContent = "0";
-        resultDisplay.textContent = "0"; 
-        firstNum = 0; 
-        secondNum = 0; 
-        operator = ""; 
-        inputString = ""; 
+    operatorButtons.forEach(op => {
+        op.addEventListener('click', handleOperatorClick);
     });
 
-    
+    equal.addEventListener('click', handleEqualClick);
+    deleteButton.addEventListener('click', deleteLastInput);
+
+    clearButton.addEventListener('click', clearAll);
+
+
 
 });
 

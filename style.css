@@ -1,40 +1,78 @@
+
+
 .mainContainer{
-    display: flex;
-    flex-direction: column;
-    border: 2px solid black;
-    height: 400px;
-    width: 400px;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    min-height: 80vh;
+    grid-template-columns: repeat(4, 80px);
+    grid-template-rows: minmax(80px, auto)repeat(5, 80px);
+
+}
+.mainContainer > button {
+    cursor: pointer;
+    font-size: 2rem;
+    border: 1px solid white;
+    outline: none;
+    background-color: rgba(255, 255, 255, .75);
+}
+
+.digit:hover {
+    background-color: rgb(55, 94, 121);
+}
+.op:hover{
+    background-color: rgb(147, 156, 59);
+}
+.clear{
+    grid-column: span 2;
     
 }
-
-.mainItem{
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    
+.equal{
+    grid-column: span 2;
 }
-
-.buttonContainer{
-    display: flex;
-    flex: 1;
-
+.clear:hover{
+    background-color: rgb(160, 55, 37);
 }
-.buttonItem{
-    flex: 1;
-    background-color: yellow;
+.delete:hover{
+    background-color: rgb(160, 55, 37);
+}
+.equal:hover{
+    background-color: rgb(74, 153, 42);
 }
 
 .displayContainer{
+    grid-column: 1 / -1;
+    background-color: rgba(3, 2, 2, 0.75);
+    color: white;
     display: flex;
-    flex-direction: column;
-    border: 2px solid black;
-    height: 80px;
     align-items: flex-end;
+    flex-direction: column;
+    border: 1px solid black;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.activeDisplay{
+    
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    align-items: flex-end;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 10px;
+
+}
+
+body{
+    background-color: #00AAFF;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
     
 }
 
-.displayItem{
-    padding: 4px;
-    flex: 1;
-   
+h1,footer{
+    text-align: center;
+    margin: 0;
 }
+
