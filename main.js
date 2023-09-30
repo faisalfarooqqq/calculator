@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     
     const equal = document.querySelector('.equal');
     const deleteButton = document.querySelector('.delete');
-    const clearButton = document.querySelector('.buttonItem.clear');
+    const clearButton = document.querySelector('.clear');
 
     let firstNum = 0;
     let secondNum = 0;
@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     const clearAll = () => {
         firstNum = 0;
         operator = "";
-        rDisplay = "";
+        
         aDisplay = "";
         result = 0;
         updateDisplays();
