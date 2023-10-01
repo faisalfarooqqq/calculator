@@ -11,15 +11,16 @@ document.addEventListener("DOMContentLoaded", ()=> {
 
     numberButtons.forEach(button => {
         button.addEventListener('click', (e)=> {
-            const number = e.target.textContent;
-            appendNumber(number);
+            console.log(e.target.textContent);
+            appendNumber(e.target.textContent);
             updateDisplays();
         })
 
     });
 
     operationButtons.forEach(button => {
-        button.addEventListener('click', (e)=>{
+        button.addEventListener('click', (e)=> {
+            console.log(e.target.textContent);
             updateOperation(e.target.textContent);
             updateDisplays();
         } )
@@ -56,6 +57,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
         aDisplay = "";
         updateDisplays();
     }
+
 
     const evaluate = () => {
 
