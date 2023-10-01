@@ -35,10 +35,6 @@ document.addEventListener("DOMContentLoaded", ()=> {
         if (operator !== null){
             resultDisplay.textContent = `${rDisplay} ${operator}`;
         }
-        if (operator == undefined){
-            resultDisplay.textContent = `${rDisplay}`;
-        }
-      
     };
 
     function appendNumber (number) {
@@ -92,7 +88,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
          }
 
          aDisplay = result;
-         operator = undefined;
+         operator = "";
          rDisplay = "";
          updateDisplays();
     };
