@@ -48,7 +48,11 @@ document.addEventListener("DOMContentLoaded", ()=> {
     };
 
     function updateOperation(selectedOperator){
-        if (aDisplay === "") return;
+        if (aDisplay === ""){
+            operator = selectedOperator;
+            return;
+
+        } 
         if (rDisplay !== ""){
             evaluate();
         }
