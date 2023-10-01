@@ -4,7 +4,7 @@
     display: grid;
     justify-content: center;
     align-content: center;
-    min-height: 80vh;
+    min-height: 100vh;
     grid-template-columns: repeat(4, 80px);
     grid-template-rows: minmax(80px, auto)repeat(5, 80px);
 
@@ -17,17 +17,17 @@
     background-color: rgba(255, 255, 255, .75);
 }
 
-.digit:hover {
+.numberButton:hover {
     background-color: rgb(55, 94, 121);
 }
-.op:hover{
+.operationButton:hover{
     background-color: rgb(147, 156, 59);
 }
 .clear{
     grid-column: span 2;
     
 }
-.equal{
+.equals{
     grid-column: span 2;
 }
 .clear:hover{
@@ -36,7 +36,7 @@
 .delete:hover{
     background-color: rgb(160, 55, 37);
 }
-.equal:hover{
+.equals:hover{
     background-color: rgb(74, 153, 42);
 }
 
@@ -63,6 +63,11 @@
     padding: 10px;
 
 }
+.resultDisplay{
+    flex: 1;
+    padding: 1px;
+
+}
 
 body{
     background-color: #00AAFF;
@@ -75,4 +80,3 @@ h1,footer{
     text-align: center;
     margin: 0;
 }
-

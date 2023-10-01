@@ -1,122 +1,100 @@
-
 document.addEventListener("DOMContentLoaded", ()=> {
 
-    const digitButtons = document.querySelectorAll('.digit');
-    const operatorButtons = document.querySelectorAll('.op');
+    const numberButtons = document.querySelectorAll('.numberButton');
+    const operationButtons = document.querySelectorAll('.operationButton');
     const activeDisplay = document.querySelector('.activeDisplay');
+    const resultDisplay = document.querySelector('.resultDisplay');
     
-    const equal = document.querySelector('.equal');
+    const equalsButton = document.querySelector('.equals');
     const deleteButton = document.querySelector('.delete');
     const clearButton = document.querySelector('.clear');
 
-    let firstNum = 0;
-    let secondNum = 0;
-    let operator = ""; 
+    numberButtons.forEach(button => {
+        button.addEventListener('click', (e)=> {
+            const number = e.target.textContent;
+            appendNumber(number);
+            updateDisplays();
+        })
+
+    });
+
+    operationButtons.forEach(button => {
+        button.addEventListener('click', (e)=>{
+            updateOperation(e.target.textContent);
+            updateDisplays();
+        } )
+    })
+
+    
     let aDisplay = "";
-    let result = 0;
+    let rDisplay = "";
+    let operator = "";
     
-    const sum = (firstNum,secondNum) => {
-      return firstNum + secondNum;
-    
-    };
-    
-    
-    const sub = (firstNum,secondNum) => {
-        return firstNum - secondNum;
-    
-    };
-    
-    const multiple = (firstNum,secondNum) => {
-        return firstNum * secondNum;
-    
-    };
-    
-    const divide = (firstNum,secondNum) => {
-        if (secondNum === 0){
-            return "ERROR! Divide by 0 not allowed.";
-        } else{
-            return firstNum / secondNum;
-
-        }
-       
-    };
-    
-    
-    const operate = (firstNum,operator,secondNum) => {
-        if (operator === "+"){
-            return sum(firstNum,secondNum);
-    
-        } else if (operator === "-"){
-            return sub(firstNum,secondNum);
-        } else if (operator === "*"){
-            return multiple(firstNum,secondNum);
-        } else if (operator === "/"){
-            return divide(firstNum,secondNum);
-        }
-        else {
-            console.log("Unknown operator");
-            return undefined;
-        };
-    };
-
-
     const updateDisplays = () => {
         activeDisplay.textContent = aDisplay;
-        
+        if (operator !== null){
+            resultDisplay.textContent = `${rDisplay} ${operator}`;
+        }
+        if (operator == undefined){
+            resultDisplay.textContent = `${rDisplay}`;
+        }
+      
     };
 
-    const handleDigitClick = (e) => {
-        const buttonText = e.target.textContent;
-    
-        if (buttonText === "." && aDisplay.includes(".")) {
-           
+    function appendNumber (number) {
+        if (number === "." && aDisplay.includes(".")) {  
             return; 
         }
-    
-        aDisplay += buttonText;
+        aDisplay += number;
         updateDisplays();
+
     };
 
-    const handleOperatorClick = (e) => {
-        if (aDisplay !== "") {
-            if (firstNum === 0) {
-                
-                firstNum = parseFloat(aDisplay);
-                operator = e.target.textContent;
-            } else {
-               
-                secondNum = parseFloat(aDisplay);
-                if (operator !== "") {
-                    
-                    firstNum = operate(firstNum, operator, secondNum);
-                    activeDisplay.textContent = firstNum + e.target.textContent;
-                }
-                operator = e.target.textContent;
-            }
-            aDisplay = "";
+    function updateOperation(selectedOperator){
+        if (aDisplay === "") return;
+        if (rDisplay !== ""){
+            evaluate();
         }
-    };
+        operator = selectedOperator;
+        rDisplay = aDisplay;
+        aDisplay = "";
+        updateDisplays();
+    }
 
-    const handleEqualClick = () => {
-        if (operator !== "") {
-            if (aDisplay !== "") {
-                secondNum = parseFloat(aDisplay);
-                result = operate(firstNum, operator, secondNum);
-                firstNum = result;
-                aDisplay = result;
-                operator = "";
-                
-                updateDisplays();
-            } else if (operator !== "" && secondNum !== 0) {
-                
-                result = operate(firstNum, operator, secondNum);
-                result = firstNum;
-                aDisplay = result;
-                
-                operator = "";
-                updateDisplays();
-            }
-        }
+    const evaluate = () => {
+
+        let result = null;
+
+        let firstNum = parseFloat(rDisplay);
+        let secondNum = parseFloat(aDisplay);
+        console.log("Entering evaluate function");
+        console.log("firstNum:", firstNum);
+        console.log("operator:", operator);
+        console.log("secondNum:", secondNum);
+        
+        
+        if (isNaN(firstNum) || isNaN (secondNum)) return;
+         switch (operator){
+            case "/":
+                result = firstNum / secondNum;
+                break
+            case "*":
+                result = firstNum * secondNum;
+                break
+             case "+":
+                result = firstNum + secondNum;
+                break            
+             case "-":
+                result = firstNum - secondNum;
+                break  
+            default:
+                return      
+         }
+
+         aDisplay = result;
+         operator = undefined;
+         rDisplay = "";
+         updateDisplays();
     };
 
     const deleteLastInput = () => {
@@ -133,30 +111,25 @@ document.addEventListener("DOMContentLoaded", ()=> {
     };
 
     const clearAll = () => {
-        firstNum = 0;
-        operator = "";
-        
+        firstNum = null;
+        secondNum = null;
+        operator = ""; 
         aDisplay = "";
-        result = 0;
+        rDisplay = "";
+        result = null;
         updateDisplays();
     };
 
-    digitButtons.forEach(digit => {
-        digit.addEventListener('click', handleDigitClick);
-    });
-
-    operatorButtons.forEach(op => {
-        op.addEventListener('click', handleOperatorClick);
-    });
-
-    equal.addEventListener('click', handleEqualClick);
+    equalsButton.addEventListener('click', evaluate);    
     deleteButton.addEventListener('click', deleteLastInput);
-
     clearButton.addEventListener('click', clearAll);
 
 
 
+
+
+
+
+
+
 });
-
-
-
